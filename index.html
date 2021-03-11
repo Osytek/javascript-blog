@@ -3,20 +3,22 @@
      <head>
           <meta charset="UTF-8" />
           <title>javascript-blog</title>
+          <link rel="preconnect" href="https://fonts.gstatic.com">
+          <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
           <link rel="stylesheet" href="vendor/bootstrap-grid.css">
           <link rel="stylesheet" href="css/style.css">
      </head>
      <body>
         <div class="blog">
             <div class="container">
-              <h1 class="logo">my blog</h1>
-              <main class="wrapper">
-                <aside class="sidebar">
+              <h1 class="logo"><a href="#">my blog</a></h1>
+              <main class="wrapper row">
+                <aside class="sidebar col-xs-9 col-sm-9 col-md-9 col-lg-3 col-xl-3 col-xxl-3">
                   <h2 class="section-title">All posts</h2>
                   <ul class="list titles">
                   </ul>
                 </aside>
-                <section class="posts">
+                <section class="posts col-xs-9 col-sm-9 col-md-9 col-lg-5 col-xl-5 col-xxl-5">
                   <article class="post active" id="article-1">
                     <h3 class="post-title">Article 1</h3>
                     <p class="post-author">by Marion Berry</p>
@@ -202,7 +204,7 @@
                     </div>
                   </article>
                 </section>
-                <aside class="sidebar">
+                <aside class="sidebar col-xs-9 col-sm-9 col-md-9 col-lg-3 col-xl-3 col-xxl-3">
                   <h2 class="section-title">Tags</h2>
                   <ul class="list tags">
                     <li><a href="#">design</a> <span>(6)</span></li>
