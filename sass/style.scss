@@ -122,6 +122,9 @@ body {
   opacity: 0;
   transition: 0.5s;
   position: absolute;
+  width: 400px;
+  left: 50%;
+  transform: translate(-50%, 0);
   &.active {
     transition: 0.5s;
     opacity: 1;
@@ -165,4 +168,8 @@ body {
   .post.active{
     width: 300px;
   }
+  .post{
+    width: 300px;
+  }
+
 }
