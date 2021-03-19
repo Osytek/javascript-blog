@@ -16,7 +16,7 @@ $font-text: 'Source Sans Pro', sans-serif;
 }
 
 body {
-  background-image: url(/images/tło.png);
+  background-image: url('/images/tło.png');
   font-family: $font-text;
   color: $color-dark;
   font-weight: 300;
@@ -162,6 +162,7 @@ body {
 @media (max-width: 439px) {
   .posts{
     height: 900px;
+    margin: 20px 0;
   }
   .post-content{
     width: 300px;
@@ -173,4 +174,9 @@ body {
     width: 300px;
   }
 
+}
+@media (max-width: 991px) {
+  .posts{
+    margin: 20px 0;
+  }
 }
