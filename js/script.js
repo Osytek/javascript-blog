@@ -1,4 +1,3 @@
-
 const titleClickHandler = function(event){
     event.preventDefault();
     const clickedElement = this;
