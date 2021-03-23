@@ -3,6 +3,12 @@
 /* eslint-disable quotes */
 /* eslint-disable no-undef */
 /* eslint-disable indent */
+const optArticleSelector = '.post',
+optTitleSelector = '.post-title',
+optTitleListSelector = '.titles';
+optArticleTagsSelector = '.post-tags .list'
+optTagsListSelector = '.tags.list'
+
 const titleClickHandler = function(event){
     event.preventDefault();
     const clickedElement = this;
@@ -37,13 +43,6 @@ const titleClickHandler = function(event){
 
 }
 
-
-const optArticleSelector = '.post',
-optTitleSelector = '.post-title',
-optTitleListSelector = '.titles';
-optArticleTagsSelector = '.post-tags .list'
-
-
 function generateTitleLinks(customSelector = ''){
 
 /* remove contents of titleList */
@@ -66,7 +65,7 @@ function generateTitleLinks(customSelector = ''){
     const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
   
     /* insert link into titleList */
-    titleList.innerHTML =+ linkHTML;
+    titleList.innerHTML += linkHTML;
     }
   
     const links = document.querySelectorAll('.titles a');
@@ -79,6 +78,8 @@ function generateTitleLinks(customSelector = ''){
 generateTitleLinks(); 
 
 function generateTags(){
+    /* [NEW] create a new variable allTags with an empty array */
+    let allTags = [];
     /* find all articles */
     const articles = document.querySelectorAll('.post');
     /* START LOOP: for every article: */
@@ -99,14 +100,26 @@ function generateTags(){
         let tagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>' + html;
         /* add generated code to html variable */
         tagWrapper.insertAdjacentHTML('beforeend',tagHTML);
+        /* [NEW] check if this link is NOT already in allTags */
+      if(allTags.indexOf(linkHTML) == -1){
+      /* [NEW] add generated code to allTags array */
+        allTags.push(linkHTML);
+      }
 
       /* END LOOP: for each tag */
       }
+      
       /* insert HTML of all the links into the tags wrapper */
   
     /* END LOOP: for every article: */
     }
-  }
+      /* [NEW] find list of tags in right column */
+      const tagList = document.querySelector('.tags');
+
+      /* [NEW] add html from allTags to tagList */
+      tagList.innerHTML = allTags.join(' ');
+
+}
   generateTags();
   function tagClickHandler(event){
     /* prevent default action for this event */
