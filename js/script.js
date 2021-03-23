@@ -215,7 +215,7 @@ function generateTags(){
   }
   function addClickListenersToAuthors(){
     /* find all links to tags */
-    const allLinksTags = document.querySelectorAll('.authors a')
+    const allLinksTags = document.querySelectorAll('.authors a, .post-author a')
     /* START LOOP: for each link */
     for(let allLinksTag of allLinksTags){
       /* add tagClickHandler as event listener for that link */
