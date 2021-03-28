@@ -219,18 +219,25 @@ function calculateTagClass(count, params){
       
       /* find tags wrapper */
         let AuthorWrapper = article.querySelector('.post-author');
-  
+        
       /* make html variable with empty string */
         let html = ' ';
       /* get tags from data-tags attribute */
         let articleTags = article.getAttribute("data-author");
-      
+        const articleTagsArray = articleTags.split(' ');
+        
         /* generate HTML of the link */
         let authorHTML = '<li><a href="#author-' + articleTags + '">' + articleTags + '</a></li>' + html;
         /* add generated code to html variable */
         AuthorWrapper.insertAdjacentHTML('beforeend',authorHTML);
-       
-      
+        for(let author of articleTagsArray){
+        if(!allAuthors[author]) {
+          /* [NEW] add tag to allTags object */
+          allAuthors[author] = 1;
+        } else {
+          allAuthors[author]++;
+        }
+        }
       
       /* insert HTML of all the links into the tags wrapper */
   
@@ -248,7 +255,7 @@ function calculateTagClass(count, params){
     /* [NEW] START LOOP: for each tag in allTags: */
     for (let author in allAuthors) {
       /* [NEW] generate code of a link and add it to allTagsHTML */
-      const authorLinkHTML = '<li><a href="#author-' +  author + '" class="' +  calculateAuthorClass(allAuthors[author], AuthorsParams) + '">' + author + '</a></li>';
+      const authorLinkHTML = '<li><a href="#author-' +  author + '" class="' +  calculateAuthorClass(allAuthors[author], authorsParams) + '">' + author + '</a></li>';
       allAuthorsHTML += authorLinkHTML;
     }
     /* [NEW] END LOOP: for each tag in allTags: */
@@ -264,11 +271,11 @@ function calculateTagClass(count, params){
    
     for (let author in authors) {
       console.log(author + ' is used ' + authors[author] + ' times');
-      if(authors > params.max){
-        params.max = authors;
+      if(authors[author] > params.max){
+        params.max = authors[author];
       }
-      else if(authors < params.min){
-        params.min = authors;
+      else if(authors[author] < params.min){
+        params.min = authors[author];
       }
       
     }
