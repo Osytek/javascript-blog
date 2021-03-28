@@ -3,6 +3,9 @@
 /* eslint-disable quotes */
 /* eslint-disable no-undef */
 /* eslint-disable indent */
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+}
 const optArticleSelector = '.post',
 optTitleSelector = '.post-title',
 optTitleListSelector = '.titles';
