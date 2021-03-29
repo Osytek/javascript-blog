@@ -3,8 +3,19 @@
 /* eslint-disable quotes */
 /* eslint-disable no-undef */
 /* eslint-disable indent */
+const authorCloudTemplates = {
+  authorCloudLink: Handlebars.compile(document.querySelector('#template-author-cloud-link').innerHTML)
+}
 const templates = {
+  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
+}
+const template = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+}
+const tagTemplate = {tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML)
+}
+const authorTemplates = {
+  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML)
 }
 const optArticleSelector = '.post',
 optTitleSelector = '.post-title',
@@ -69,7 +80,8 @@ function generateTitleLinks(customSelector = ''){
     /* get the title from the title element */
   
     /* create HTML of the link */
-    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = template.articleLink(linkHTMLData);
   
     /* insert link into titleList */
     titleList.innerHTML += linkHTML;
@@ -95,8 +107,6 @@ function generateTags(){
       /* find tags wrapper */
         let tagWrapper = article.querySelector('.post-tags .list');
   
-      /* make html variable with empty string */
-        let html = ' ';
       /* get tags from data-tags attribute */
         let articleTags = article.getAttribute("data-tags");
       /* split tags into array */
@@ -104,7 +114,8 @@ function generateTags(){
       /* START LOOP: for each tag */
       for(let tag of articleTagsArray){
         /* generate HTML of the link */
-        let tagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>' + html;
+        const linkHTMLData = {id: tag, title: tag};
+        const tagHTML = tagTemplate.tagLink(linkHTMLData);
         /* add generated code to html variable */
         tagWrapper.insertAdjacentHTML('beforeend',tagHTML);
       /* [NEW] check if this link is NOT already in allTags */
@@ -118,7 +129,6 @@ function generateTags(){
       /* END LOOP: for each tag */
       }
       
-      /* insert HTML of all the links into the tags wrapper */
   
     /* END LOOP: for every article: */
     }
@@ -129,19 +139,24 @@ function generateTags(){
     
     /* [NEW] create variable for all links HTML code */
     
-    let allTagsHTML = '';
+    const allTagsData = {tags: []};
 
     /* [NEW] START LOOP: for each tag in allTags: */
     for (let tag in allTags) {
       /* [NEW] generate code of a link and add it to allTagsHTML */
-      const tagLinkHTML = '<li><a href="#tag-' +  tag + '" class="' +  calculateTagClass(allTags[tag], tagsParams) + '">' + tag + '</a></li>';
-      allTagsHTML += tagLinkHTML;
+      
+      allTagsData.tags.push({
+        tag: tag,
+        count: allTags[tag],
+        className: calculateTagClass(allTags[tag], tagsParams)
+      });
     }
     /* [NEW] END LOOP: for each tag in allTags: */
 
     /*[NEW] add HTML from allTagsHTML to tagList */
     
-    tagList.innerHTML = allTagsHTML;
+    tagList.innerHTML = templates.tagCloudLink(allTagsData);
+    console.log(allTagsData)
   
 }
 
@@ -223,14 +238,13 @@ function calculateTagClass(count, params){
       /* find tags wrapper */
         let AuthorWrapper = article.querySelector('.post-author');
         
-      /* make html variable with empty string */
-        let html = ' ';
       /* get tags from data-tags attribute */
         let articleTags = article.getAttribute("data-author");
-        const articleTagsArray = articleTags.split(' ');
+        const articleTagsArray = articleTags.split();
         
         /* generate HTML of the link */
-        let authorHTML = '<li><a href="#author-' + articleTags + '">' + articleTags + '</a></li>' + html;
+        const linkHTMLData = {id: articleTags, title: articleTags};
+        const authorHTML = authorTemplates.authorLink(linkHTMLData);
         /* add generated code to html variable */
         AuthorWrapper.insertAdjacentHTML('beforeend',authorHTML);
         for(let author of articleTagsArray){
@@ -253,19 +267,23 @@ function calculateTagClass(count, params){
     console.log('authorsParams:', authorsParams)
 
   /* [NEW] create variable for all links HTML code */
-  let allAuthorsHTML = '';
+  const allAuthorsData = {authors: []};
 
     /* [NEW] START LOOP: for each tag in allTags: */
     for (let author in allAuthors) {
       /* [NEW] generate code of a link and add it to allTagsHTML */
       const authorLinkHTML = '<li><a href="#author-' +  author + '" class="' +  calculateAuthorClass(allAuthors[author], authorsParams) + '">' + author + '</a></li>';
-      allAuthorsHTML += authorLinkHTML;
+      allAuthorsData.authors.push({
+        author: author,
+        count: allAuthors[author],
+        className: calculateAuthorClass(allAuthors[author], authorsParams)
+      });
     }
     /* [NEW] END LOOP: for each tag in allTags: */
 
     /*[NEW] add HTML from allTagsHTML to tagList */
     
-    authorList.innerHTML = allAuthorsHTML;
+    authorList.innerHTML = authorCloudTemplates.authorCloudLink(allAuthorsData);;
   
 }
 
